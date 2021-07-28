@@ -12,9 +12,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //                                             View && Pagination
+
     public function index()
     {
-//                                               View && Pagination
+
          $products = Product::latest()->paginate(4);
         return view('product.index', compact('products'));
     }
