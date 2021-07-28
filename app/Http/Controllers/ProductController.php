@@ -14,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+//                                               View && Pagination
+         $products = Product::latest()->paginate(4);
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -22,9 +24,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //                                               Create Product
+
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -33,9 +38,21 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //                                               Validate && Redirect With Successed Notify
+
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'details'=>'required',
+        ]);
+
+        $product = Product::create($request->all());
+        return redirect()->route('products.index')
+        ->with('success', 'product added successfully');
     }
 
     /**
@@ -44,9 +61,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
+
+    //                                               View Product Info
+
     public function show(Product $product)
     {
-        //
+        return view('product.show', compact('product'));
     }
 
     /**
@@ -55,21 +75,27 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
+
+    //                                               Edit Product
+
     public function edit(Product $product)
     {
-        //
+        return view('product.edit', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+    //                                               Validate , Update && Redirect With Successed Notify
+
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'details'=>'required',
+        ]);
+
+        $product->update($request->all());
+        return redirect()->route('products.index')
+            ->with('success', 'product updated successfully');
     }
 
     /**
@@ -78,8 +104,13 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
+
+    //                                               Delete && Redirect With Successed Notify
+
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('products.index')
+            ->with('success', 'product deleted successfully');
     }
 }
