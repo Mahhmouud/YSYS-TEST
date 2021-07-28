@@ -2,6 +2,8 @@
 
 @section('content')
 
+                                                        {{--Back Button && Product Name--}}
+
     <div class="container" style="padding-top: 12%">
         <div class="card" >
 
@@ -10,6 +12,8 @@
             </div>
         </div>
     </div>
+
+                                                        {{--Update Form--}}
 
     <div class="container" style="padding-top: 2%">
         <form action="{{route('products.update', $product->id)}}" method="POST">
